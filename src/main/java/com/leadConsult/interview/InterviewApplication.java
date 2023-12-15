@@ -1,13 +1,13 @@
-package com.leadConsult.intrview;
+package com.leadConsult.interview;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IntrviewApplication {
+public class InterviewApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IntrviewApplication.class, args);
+		SpringApplication.run(InterviewApplication.class, args);
 	}
 
 }

@@ -29,9 +29,10 @@ public class StudentServiceImpl implements StudentService {
   }
 
   @Override
-  public Student postStudent(StudentRequest studentRequest) {
-    Student newMatch = studentMapper.studentRequestToStudent(studentRequest);
+  public StudentResponse postStudent(StudentRequest studentRequest) {
+    Student student = studentMapper.studentRequestToStudent(studentRequest);
+    studentRepository.save(student);
 
-    return studentRepository.save(newMatch);
+    return studentMapper.studentToStudentResponse(student);
   }
 }

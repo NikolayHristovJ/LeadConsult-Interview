@@ -2,7 +2,6 @@ package com.leadConsult.interview.controller;
 
 import com.leadConsult.interview.dto.request.StudentRequest;
 import com.leadConsult.interview.dto.response.StudentResponse;
-import com.leadConsult.interview.entity.Student;
 import com.leadConsult.interview.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,8 +29,8 @@ public class StudentController {
   }
 
   @PostMapping
-  public ResponseEntity<Student> postStudent(@RequestBody StudentRequest studentRequest){
-    Student newStudent = studentService.postStudent(studentRequest);
+  public ResponseEntity<StudentResponse> postStudent(@RequestBody StudentRequest studentRequest){
+    StudentResponse newStudent = studentService.postStudent(studentRequest);
 
     return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
   }

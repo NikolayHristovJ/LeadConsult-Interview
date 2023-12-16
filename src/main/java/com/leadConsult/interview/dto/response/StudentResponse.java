@@ -13,5 +13,4 @@ public class StudentResponse {
   private Integer age;
   private GroupResponse group;
   private Set<CourseResponse> studentsCourses;
-
 }

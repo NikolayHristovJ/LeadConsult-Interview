@@ -42,6 +42,6 @@ public class Teacher {
   private Set<Course> teachersCourses;
 
   @ManyToOne
-  @JoinColumn(name = "group_id",nullable = false)
+  @JoinColumn(name = "group_id")
   private Group group;
 }

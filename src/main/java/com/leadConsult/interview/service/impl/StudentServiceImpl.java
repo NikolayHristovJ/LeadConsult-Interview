@@ -24,8 +24,8 @@ public class StudentServiceImpl implements StudentService {
 
   @Override
   public List<StudentResponse> getAllStudents() {
-    List<Student> responses = studentRepository.findAll();
-    return studentMapper.listStudentToListStudentResponse(responses);
+    List<Student> students = studentRepository.findAll();
+    return studentMapper.listStudentToListStudentResponse(students);
   }
 
   @Override

@@ -6,6 +6,7 @@ import com.leadConsult.interview.entity.Group;
 import com.leadConsult.interview.mapper.GroupMapper;
 import com.leadConsult.interview.repository.GroupRepository;
 import com.leadConsult.interview.service.GroupService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,13 @@ public class GroupServiceImpl implements GroupService {
   }
 
   @Override
+  public Group getGroupFromRepository(Long groupId) {
+    return groupRepository.findById(groupId)
+                           .orElseThrow(
+                             () -> new EntityNotFoundException(String.format("Group not found with id:", groupId)));
+  }
+
+  @Override
   public List<GroupResponse> getAllGroups() {
     List<Group> groups = groupRepository.findAll();
     return groupMapper.listGroupToListGroupResponse(groups);
@@ -32,6 +40,13 @@ public class GroupServiceImpl implements GroupService {
   public GroupResponse postGroup(GroupRequest groupRequest) {
     Group group = groupMapper.groupRequestToGroup(groupRequest);
     groupRepository.save(group);
+
+    return groupMapper.groupToGroupResponse(group);
+  }
+
+  @Override
+  public GroupResponse getGroupById(Long groupId) {
+    Group group = getGroupFromRepository(groupId);
 
     return groupMapper.groupToGroupResponse(group);
   }

@@ -6,6 +6,7 @@ import com.leadConsult.interview.entity.Student;
 import com.leadConsult.interview.mapper.StudentMapper;
 import com.leadConsult.interview.repository.StudentRepository;
 import com.leadConsult.interview.service.StudentService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,13 @@ public class StudentServiceImpl implements StudentService {
   }
 
   @Override
+  public Student getStudentFromRepository(Long studentId) {
+    return studentRepository.findById(studentId)
+                           .orElseThrow(
+                             () -> new EntityNotFoundException(String.format("Student not found with id:", studentId)));
+  }
+
+  @Override
   public List<StudentResponse> getAllStudents() {
     List<Student> students = studentRepository.findAll();
     return studentMapper.listStudentToListStudentResponse(students);
@@ -33,6 +41,12 @@ public class StudentServiceImpl implements StudentService {
     Student student = studentMapper.studentRequestToStudent(studentRequest);
     studentRepository.save(student);
 
+    return studentMapper.studentToStudentResponse(student);
+  }
+
+  @Override
+  public StudentResponse getStudentById(Long studentId) {
+    Student student = getStudentFromRepository(studentId);
     return studentMapper.studentToStudentResponse(student);
   }
 }

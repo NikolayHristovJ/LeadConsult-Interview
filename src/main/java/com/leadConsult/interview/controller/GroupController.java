@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +35,11 @@ public class GroupController {
   public ResponseEntity<GroupResponse> postGroup(@RequestBody GroupRequest groupRequest){
     GroupResponse response = groupService.postGroup(groupRequest);
     return new ResponseEntity<>(response, HttpStatus.CREATED);
+  }
+
+  @GetMapping("/{groupId}")
+  public ResponseEntity<GroupResponse> getGroupById(@PathVariable Long groupId){
+    GroupResponse response = groupService.getGroupById(groupId);
+    return ResponseEntity.ok(response);
   }
 }

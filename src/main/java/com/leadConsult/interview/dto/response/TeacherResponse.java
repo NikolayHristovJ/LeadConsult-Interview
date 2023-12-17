@@ -1,6 +1,5 @@
 package com.leadConsult.interview.dto.response;
 
-import com.leadConsult.interview.entity.Group;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,5 +12,5 @@ public class TeacherResponse {
   private String teacherName;
   private Integer age;
   private Set<CourseResponse> teachersCourses;
-  private Group group;
+  private GroupResponse group;
 }

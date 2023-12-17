@@ -40,7 +40,7 @@ public class Student {
   )
   private Set<Course> studentsCourses;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "group_id")
   private Group group;
 

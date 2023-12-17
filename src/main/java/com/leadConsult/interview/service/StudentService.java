@@ -19,4 +19,6 @@ public interface StudentService {
   StudentResponse editStudent(Long studentId, StudentRequest request);
 
   void addCourseToStudent(Long courseId, Long studentId);
+
+  void addStudentToGroup(Long studentId, Long groupId);
 }

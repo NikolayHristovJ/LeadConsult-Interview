@@ -45,7 +45,7 @@ public class StudentController {
   }
 
   @PutMapping("/{studentId}")
-  public ResponseEntity<StudentResponse> putStudent(@RequestBody StudentRequest request,
+  public ResponseEntity<StudentResponse> editStudent(@RequestBody StudentRequest request,
                                                     @PathVariable Long studentId,
                                                     @RequestParam(required = false) boolean returnOld){
     StudentResponse response = studentService.editStudent(studentId,request);
@@ -59,7 +59,13 @@ public class StudentController {
   @PostMapping("/{studentId}/courses/{courseId}/add")
   public ResponseEntity<Void> addCourseToStudent(@PathVariable Long courseId,@PathVariable Long studentId){
     studentService.addCourseToStudent(courseId,studentId);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
+  }
+
+  @PostMapping("/{studentId}/groups/{groupId}/add")
+  public ResponseEntity<Void> addStudentToGroup(@PathVariable Long studentId,@PathVariable Long groupId){
+    studentService.addStudentToGroup(studentId,groupId);
+    return ResponseEntity.noContent().build();
   }
 
 }

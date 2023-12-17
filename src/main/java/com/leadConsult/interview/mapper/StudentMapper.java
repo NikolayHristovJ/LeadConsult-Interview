@@ -10,6 +10,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
   Student studentRequestToStudent(StudentRequest request);
-  StudentResponse studentToStudentResponse (Student student);
+  StudentResponse studentToStudentResponse (Student students);
   List<StudentResponse> listStudentToListStudentResponse (List<Student> student);
 }

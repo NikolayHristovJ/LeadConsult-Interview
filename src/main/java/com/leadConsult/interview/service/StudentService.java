@@ -8,7 +8,13 @@ import java.util.List;
 
 public interface StudentService {
 
+  Student getStudentFromRepository(Long studentId);
+
   List<StudentResponse> getAllStudents();
 
-  Student postStudent(StudentRequest studentRequest);
+  StudentResponse postStudent(StudentRequest studentRequest);
+
+  StudentResponse getStudentById(Long studentId);
+
+  StudentResponse editStudent(Long studentId, StudentRequest request);
 }

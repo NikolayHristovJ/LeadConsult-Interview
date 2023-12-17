@@ -6,6 +6,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class GroupRequest {
-  private Long groupId;
   private String groupName;
 }

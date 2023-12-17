@@ -19,4 +19,6 @@ public interface TeacherService {
   TeacherResponse editTeacher(Long teacherId, TeacherRequest request);
 
   void addCourseToTeacher(Long courseId, Long teacherId);
+
+  TeacherResponse deleteTeacher(Long teacherId);
 }

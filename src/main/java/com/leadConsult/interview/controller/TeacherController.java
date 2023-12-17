@@ -7,6 +7,7 @@ import com.leadConsult.interview.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +48,7 @@ public class TeacherController {
   }
 
   @PutMapping("/{teacherId}")
-  public ResponseEntity<TeacherResponse> putTeacher(@RequestBody TeacherRequest request,
+  public ResponseEntity<TeacherResponse> editTeacher(@RequestBody TeacherRequest request,
                                                     @PathVariable Long teacherId,
                                                     @RequestParam(required = false) boolean returnOld){
     TeacherResponse response = teacherService.editTeacher(teacherId,request);
@@ -61,6 +62,16 @@ public class TeacherController {
   @PostMapping("/{teacherId}/courses/{courseId}/add")
   public ResponseEntity<Void> addCourseToStudent(@PathVariable Long courseId,@PathVariable Long teacherId){
     teacherService.addCourseToTeacher(courseId,teacherId);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
+  }
+
+  @DeleteMapping("{teacherId}")
+  public ResponseEntity<TeacherResponse> deleteTeacher(@PathVariable Long teacherId,@RequestParam(required = false) boolean returnOld){
+    TeacherResponse response = teacherService.deleteTeacher(teacherId);
+    if (returnOld) {
+      return ResponseEntity.ok(response);
+    } else {
+      return ResponseEntity.noContent().build();
+    }
   }
 }

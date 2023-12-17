@@ -3,10 +3,12 @@ package com.leadConsult.interview.service.impl;
 import com.leadConsult.interview.dto.request.StudentRequest;
 import com.leadConsult.interview.dto.response.StudentResponse;
 import com.leadConsult.interview.entity.Course;
+import com.leadConsult.interview.entity.Group;
 import com.leadConsult.interview.entity.Student;
 import com.leadConsult.interview.mapper.StudentMapper;
 import com.leadConsult.interview.repository.StudentRepository;
 import com.leadConsult.interview.service.CourseService;
+import com.leadConsult.interview.service.GroupService;
 import com.leadConsult.interview.service.StudentService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -21,14 +23,16 @@ public class StudentServiceImpl implements StudentService {
   private final StudentRepository studentRepository;
   private final StudentMapper studentMapper;
   private final CourseService courseService;
+  private final GroupService groupService;
 
   @Autowired
   public StudentServiceImpl(
     StudentRepository studentRepository, StudentMapper studentMapper,
-    CourseService courseService) {
+    CourseService courseService, GroupService groupService) {
     this.studentRepository = studentRepository;
     this.studentMapper = studentMapper;
     this.courseService = courseService;
+    this.groupService = groupService;
   }
 
   @Override
@@ -80,6 +84,15 @@ public class StudentServiceImpl implements StudentService {
     Course course = courseService.getCourseFromRepository(courseId);
 
     student.addCourseToStudent(course);
+    studentRepository.save(student);
+  }
+
+  @Override
+  public void addStudentToGroup(Long studentId, Long groupId) {
+    Student student = getStudentFromRepository(studentId);
+    Group group = groupService.getGroupFromRepository(groupId);
+
+    student.setGroup(group);
     studentRepository.save(student);
   }
 }

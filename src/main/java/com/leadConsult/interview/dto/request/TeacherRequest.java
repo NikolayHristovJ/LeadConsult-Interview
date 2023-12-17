@@ -8,5 +8,4 @@ import lombok.NoArgsConstructor;
 public class TeacherRequest {
   private String teacherName;
   private Integer age;
-  private GroupRequest group;
 }

@@ -80,4 +80,12 @@ public class TeacherServiceImpl implements TeacherService {
     teacher.addCourseToTeacher(course);
     teacherRepository.save(teacher);
   }
+
+  @Override
+  @Transactional
+  public TeacherResponse deleteTeacher(Long teacherId) {
+    Teacher teacher = getTeacherFromRepository(teacherId);
+    teacherRepository.deleteById(teacher.getTeacherId());
+    return teacherMapper.teacherToTeacherResponse(teacher);
+  }
 }

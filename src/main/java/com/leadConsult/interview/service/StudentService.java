@@ -15,4 +15,6 @@ public interface StudentService {
   StudentResponse postStudent(StudentRequest studentRequest);
 
   StudentResponse getStudentById(Long studentId);
+
+  StudentResponse editStudent(Long studentId, StudentRequest request);
 }

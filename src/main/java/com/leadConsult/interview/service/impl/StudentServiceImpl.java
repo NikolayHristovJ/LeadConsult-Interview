@@ -7,6 +7,7 @@ import com.leadConsult.interview.mapper.StudentMapper;
 import com.leadConsult.interview.repository.StudentRepository;
 import com.leadConsult.interview.service.StudentService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,5 +49,19 @@ public class StudentServiceImpl implements StudentService {
   public StudentResponse getStudentById(Long studentId) {
     Student student = getStudentFromRepository(studentId);
     return studentMapper.studentToStudentResponse(student);
+  }
+
+  @Override
+  @Transactional
+  public StudentResponse editStudent(Long studentId, StudentRequest request) {
+    Student oldStudent = getStudentFromRepository(studentId);
+
+    Student editedStudent = studentMapper.studentRequestToStudent(request);
+    editedStudent.setStudentId(studentId);
+    editedStudent.setStudentsCourses(oldStudent.getStudentsCourses());
+    StudentResponse response = studentMapper.studentToStudentResponse(oldStudent);
+    studentRepository.save(editedStudent);
+
+    return response;
   }
 }

@@ -3,6 +3,7 @@ package com.leadConsult.interview.controller;
 import com.leadConsult.interview.dto.request.CourseRequest;
 import com.leadConsult.interview.dto.response.CourseResponse;
 import com.leadConsult.interview.service.CourseService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class CourseController {
   }
 
   @PostMapping
-  public ResponseEntity<CourseResponse> postCourse(@RequestBody CourseRequest courseRequest){
+  public ResponseEntity<CourseResponse> postCourse(@RequestBody @Valid CourseRequest courseRequest){
     CourseResponse response = courseService.postGroup(courseRequest);
     return new ResponseEntity<>(response, HttpStatus.CREATED);
   }
@@ -46,7 +47,7 @@ public class CourseController {
   }
 
   @PutMapping("/{courseId}")
-  public ResponseEntity<CourseResponse> editCourse(@RequestBody CourseRequest request,
+  public ResponseEntity<CourseResponse> editCourse(@RequestBody @Valid CourseRequest request,
                                                     @PathVariable Long courseId,
                                                     @RequestParam(required = false) boolean returnOld){
     CourseResponse response = courseService.editCourse(courseId,request);

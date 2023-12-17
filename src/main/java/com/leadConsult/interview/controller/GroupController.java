@@ -3,6 +3,7 @@ package com.leadConsult.interview.controller;
 import com.leadConsult.interview.dto.request.GroupRequest;
 import com.leadConsult.interview.dto.response.GroupResponse;
 import com.leadConsult.interview.service.GroupService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class GroupController {
   }
 
   @PostMapping
-  public ResponseEntity<GroupResponse> postGroup(@RequestBody GroupRequest groupRequest){
+  public ResponseEntity<GroupResponse> postGroup(@RequestBody @Valid GroupRequest groupRequest){
     GroupResponse response = groupService.postGroup(groupRequest);
     return new ResponseEntity<>(response, HttpStatus.CREATED);
   }
@@ -46,7 +47,7 @@ public class GroupController {
   }
 
   @PutMapping("/{groupId}")
-  public ResponseEntity<GroupResponse> editGroup(@RequestBody GroupRequest request,
+  public ResponseEntity<GroupResponse> editGroup(@RequestBody @Valid GroupRequest request,
                                                     @PathVariable Long groupId,
                                                     @RequestParam(required = false) boolean returnOld){
     GroupResponse response = groupService.editGroup(groupId,request);

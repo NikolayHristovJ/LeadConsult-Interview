@@ -1,6 +1,5 @@
 package com.leadConsult.interview.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,7 +38,7 @@ public class Teacher {
   )
   private Set<Course> teachersCourses;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "group_id")
   private Group group;
 

@@ -96,4 +96,12 @@ public class StudentServiceImpl implements StudentService {
     student.setGroup(group);
     studentRepository.save(student);
   }
+
+  @Override
+  @Transactional
+  public StudentResponse deleteStudent(Long studentId) {
+    Student student = getStudentFromRepository(studentId);
+    studentRepository.deleteById(student.getStudentId());
+    return studentMapper.studentToStudentResponse(student);
+  }
 }

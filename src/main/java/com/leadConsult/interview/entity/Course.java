@@ -1,5 +1,6 @@
 package com.leadConsult.interview.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,10 +29,10 @@ public class Course {
 
   private String type;
 
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "studentsCourses")
+  @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "studentsCourses")
   private Set<Student> students;
 
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "teachersCourses")
+  @ManyToMany(cascade = CascadeType.ALL, fetch= FetchType.LAZY, mappedBy = "teachersCourses")
   private Set<Teacher> teachers;
 
   public Long getCourseId() {

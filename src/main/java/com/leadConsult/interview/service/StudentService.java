@@ -21,4 +21,6 @@ public interface StudentService {
   void addCourseToStudent(Long courseId, Long studentId);
 
   void addStudentToGroup(Long studentId, Long groupId);
+
+  StudentResponse deleteStudent(Long studentId);
 }

@@ -1,9 +1,7 @@
 package com.leadConsult.interview.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +30,7 @@ public class Student {
 
   private Integer age;
 
-  @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @ManyToMany
   @JoinTable(
     name = "students_courses",
     joinColumns = @JoinColumn(name = "student_id"),
@@ -40,7 +38,7 @@ public class Student {
   )
   private Set<Course> studentsCourses;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "group_id")
   private Group group;
 

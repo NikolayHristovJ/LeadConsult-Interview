@@ -7,6 +7,7 @@ import com.leadConsult.interview.mapper.CourseMapper;
 import com.leadConsult.interview.repository.CourseRepository;
 import com.leadConsult.interview.service.CourseService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +50,20 @@ public class CourseServiceImpl implements CourseService {
     Course course = getCourseFromRepository(courseId);
 
     return courseMapper.courseToCourseResponse(course);
+  }
+
+  @Override
+  @Transactional
+  public CourseResponse editCourse(Long courseId, CourseRequest request) {
+    Course oldCourse = getCourseFromRepository(courseId);
+
+    Course editedCourse = courseMapper.courseRequestToCourse(request);
+    editedCourse.setCourseId(courseId);
+    editedCourse.setStudents(oldCourse.getStudents());
+    editedCourse.setTeachers(oldCourse.getTeachers());
+    CourseResponse response = courseMapper.courseToCourseResponse(oldCourse);
+    courseRepository.save(editedCourse);
+
+    return response;
   }
 }

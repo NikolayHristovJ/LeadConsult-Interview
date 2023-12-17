@@ -15,4 +15,6 @@ public interface CourseService {
   CourseResponse postGroup(CourseRequest courseRequest);
 
   CourseResponse getCourseById(Long courseId);
+
+  CourseResponse editCourse(Long courseId, CourseRequest request);
 }

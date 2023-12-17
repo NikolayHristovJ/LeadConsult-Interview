@@ -1,9 +1,7 @@
 package com.leadConsult.interview.controller;
 
 import com.leadConsult.interview.dto.request.StudentRequest;
-import com.leadConsult.interview.dto.request.TeacherRequest;
 import com.leadConsult.interview.dto.response.StudentResponse;
-import com.leadConsult.interview.dto.response.TeacherResponse;
 import com.leadConsult.interview.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,6 +54,12 @@ public class StudentController {
     } else {
       return ResponseEntity.noContent().build();
     }
+  }
+
+  @PostMapping("/{studentId}/courses/{courseId}/add")
+  public ResponseEntity<Void> addCourseToStudent(@PathVariable Long courseId,@PathVariable Long studentId){
+    studentService.addCourseToStudent(courseId,studentId);
+    return ResponseEntity.ok().build();
   }
 
 }

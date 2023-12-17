@@ -74,4 +74,10 @@ public class TeacherController {
       return ResponseEntity.noContent().build();
     }
   }
+
+  @PostMapping("/{teacherId}/groups/{groupId}/add")
+  public ResponseEntity<Void> addTeacherToGroup(@PathVariable Long teacherId,@PathVariable Long groupId){
+    teacherService.addTeacherToGroup(teacherId,groupId);
+    return ResponseEntity.noContent().build();
+  }
 }

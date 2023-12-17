@@ -88,6 +88,7 @@ public class StudentServiceImpl implements StudentService {
   }
 
   @Override
+  @Transactional
   public void addStudentToGroup(Long studentId, Long groupId) {
     Student student = getStudentFromRepository(studentId);
     Group group = groupService.getGroupFromRepository(groupId);

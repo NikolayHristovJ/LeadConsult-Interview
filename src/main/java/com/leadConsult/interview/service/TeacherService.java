@@ -21,4 +21,6 @@ public interface TeacherService {
   void addCourseToTeacher(Long courseId, Long teacherId);
 
   TeacherResponse deleteTeacher(Long teacherId);
+
+  void addTeacherToGroup(Long teacherId, Long groupId);
 }

@@ -3,10 +3,12 @@ package com.leadConsult.interview.service.impl;
 import com.leadConsult.interview.dto.request.TeacherRequest;
 import com.leadConsult.interview.dto.response.TeacherResponse;
 import com.leadConsult.interview.entity.Course;
+import com.leadConsult.interview.entity.Group;
 import com.leadConsult.interview.entity.Teacher;
 import com.leadConsult.interview.mapper.TeacherMapper;
 import com.leadConsult.interview.repository.TeacherRepository;
 import com.leadConsult.interview.service.CourseService;
+import com.leadConsult.interview.service.GroupService;
 import com.leadConsult.interview.service.TeacherService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -20,13 +22,16 @@ public class TeacherServiceImpl implements TeacherService {
   private final TeacherRepository teacherRepository;
   private final TeacherMapper teacherMapper;
   private final CourseService courseService;
+  private final GroupService groupService;
+
 
   @Autowired
   public TeacherServiceImpl(TeacherRepository teacherRepository, TeacherMapper teacherMapper,
-                            CourseService courseService) {
+                            CourseService courseService, GroupService groupService) {
     this.teacherRepository = teacherRepository;
     this.teacherMapper = teacherMapper;
     this.courseService = courseService;
+    this.groupService = groupService;
   }
 
   @Override
@@ -87,5 +92,15 @@ public class TeacherServiceImpl implements TeacherService {
     Teacher teacher = getTeacherFromRepository(teacherId);
     teacherRepository.deleteById(teacher.getTeacherId());
     return teacherMapper.teacherToTeacherResponse(teacher);
+  }
+
+  @Override
+  @Transactional
+  public void addTeacherToGroup(Long teacherId, Long groupId) {
+    Teacher teacher = getTeacherFromRepository(teacherId);
+    Group group = groupService.getGroupFromRepository(groupId);
+
+    teacher.setGroup(group);
+    teacherRepository.save(teacher);
   }
 }

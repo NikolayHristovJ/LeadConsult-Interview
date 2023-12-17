@@ -1,9 +1,7 @@
 package com.leadConsult.interview.controller;
 
 import com.leadConsult.interview.dto.request.GroupRequest;
-import com.leadConsult.interview.dto.request.TeacherRequest;
 import com.leadConsult.interview.dto.response.GroupResponse;
-import com.leadConsult.interview.dto.response.TeacherResponse;
 import com.leadConsult.interview.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +46,7 @@ public class GroupController {
   }
 
   @PutMapping("/{groupId}")
-  public ResponseEntity<GroupResponse> putGroup(@RequestBody GroupRequest request,
+  public ResponseEntity<GroupResponse> editGroup(@RequestBody GroupRequest request,
                                                     @PathVariable Long groupId,
                                                     @RequestParam(required = false) boolean returnOld){
     GroupResponse response = groupService.editGroup(groupId,request);

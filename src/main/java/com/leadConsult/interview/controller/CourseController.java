@@ -1,9 +1,7 @@
 package com.leadConsult.interview.controller;
 
 import com.leadConsult.interview.dto.request.CourseRequest;
-import com.leadConsult.interview.dto.request.TeacherRequest;
 import com.leadConsult.interview.dto.response.CourseResponse;
-import com.leadConsult.interview.dto.response.TeacherResponse;
 import com.leadConsult.interview.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +46,7 @@ public class CourseController {
   }
 
   @PutMapping("/{courseId}")
-  public ResponseEntity<CourseResponse> putCourse(@RequestBody CourseRequest request,
+  public ResponseEntity<CourseResponse> editCourse(@RequestBody CourseRequest request,
                                                     @PathVariable Long courseId,
                                                     @RequestParam(required = false) boolean returnOld){
     CourseResponse response = courseService.editCourse(courseId,request);

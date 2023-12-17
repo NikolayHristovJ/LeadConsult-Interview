@@ -1,13 +1,13 @@
 package com.leadConsult.interview.controller;
 
 import com.leadConsult.interview.dto.request.StudentRequest;
-import com.leadConsult.interview.dto.request.TeacherRequest;
 import com.leadConsult.interview.dto.response.StudentResponse;
 import com.leadConsult.interview.dto.response.TeacherResponse;
 import com.leadConsult.interview.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,10 +47,32 @@ public class StudentController {
   }
 
   @PutMapping("/{studentId}")
-  public ResponseEntity<StudentResponse> putStudent(@RequestBody StudentRequest request,
+  public ResponseEntity<StudentResponse> editStudent(@RequestBody StudentRequest request,
                                                     @PathVariable Long studentId,
                                                     @RequestParam(required = false) boolean returnOld){
     StudentResponse response = studentService.editStudent(studentId,request);
+    if (returnOld) {
+      return ResponseEntity.ok(response);
+    } else {
+      return ResponseEntity.noContent().build();
+    }
+  }
+
+  @PostMapping("/{studentId}/courses/{courseId}/add")
+  public ResponseEntity<Void> addCourseToStudent(@PathVariable Long courseId,@PathVariable Long studentId){
+    studentService.addCourseToStudent(courseId,studentId);
+    return ResponseEntity.noContent().build();
+  }
+
+  @PostMapping("/{studentId}/groups/{groupId}/add")
+  public ResponseEntity<Void> addStudentToGroup(@PathVariable Long studentId,@PathVariable Long groupId){
+    studentService.addStudentToGroup(studentId,groupId);
+    return ResponseEntity.noContent().build();
+  }
+
+  @DeleteMapping("{studentId}")
+  public ResponseEntity<StudentResponse> deleteStudent(@PathVariable Long studentId, @RequestParam(required = false) boolean returnOld){
+    StudentResponse response = studentService.deleteStudent(studentId);
     if (returnOld) {
       return ResponseEntity.ok(response);
     } else {

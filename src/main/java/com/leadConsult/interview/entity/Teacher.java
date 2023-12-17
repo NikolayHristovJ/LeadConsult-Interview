@@ -11,7 +11,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
@@ -20,7 +19,6 @@ import java.util.Set;
 @Table(name = "teachers")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class Teacher {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,4 +41,48 @@ public class Teacher {
   @ManyToOne
   @JoinColumn(name = "group_id")
   private Group group;
+
+  public void addCourseToTeacher(Course course){
+    this.teachersCourses.add(course);
+  }
+
+  public Long getTeacherId() {
+    return teacherId;
+  }
+
+  public void setTeacherId(Long teacherId) {
+    this.teacherId = teacherId;
+  }
+
+  public String getTeacherName() {
+    return teacherName;
+  }
+
+  public void setTeacherName(String teacherName) {
+    this.teacherName = teacherName;
+  }
+
+  public Integer getAge() {
+    return age;
+  }
+
+  public void setAge(Integer age) {
+    this.age = age;
+  }
+
+  public Set<Course> getTeachersCourses() {
+    return teachersCourses;
+  }
+
+  public void setTeachersCourses(Set<Course> teachersCourses) {
+    this.teachersCourses = teachersCourses;
+  }
+
+  public Group getGroup() {
+    return group;
+  }
+
+  public void setGroup(Group group) {
+    this.group = group;
+  }
 }

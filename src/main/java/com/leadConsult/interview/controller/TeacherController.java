@@ -57,4 +57,10 @@ public class TeacherController {
       return ResponseEntity.noContent().build();
     }
   }
+
+  @PostMapping("/{teacherId}/courses/{courseId}/add")
+  public ResponseEntity<Void> addCourseToStudent(@PathVariable Long courseId,@PathVariable Long teacherId){
+    teacherService.addCourseToTeacher(courseId,teacherId);
+    return ResponseEntity.ok().build();
+  }
 }

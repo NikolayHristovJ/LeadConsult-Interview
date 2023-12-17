@@ -2,8 +2,8 @@ package com.leadConsult.interview.controller;
 
 import com.leadConsult.interview.dto.request.StudentRequest;
 import com.leadConsult.interview.dto.response.StudentResponse;
-import com.leadConsult.interview.dto.response.TeacherResponse;
 import com.leadConsult.interview.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class StudentController {
   }
 
   @PostMapping
-  public ResponseEntity<StudentResponse> postStudent(@RequestBody StudentRequest studentRequest){
+  public ResponseEntity<StudentResponse> postStudent(@RequestBody @Valid StudentRequest studentRequest){
     StudentResponse newStudent = studentService.postStudent(studentRequest);
 
     return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
@@ -47,7 +47,7 @@ public class StudentController {
   }
 
   @PutMapping("/{studentId}")
-  public ResponseEntity<StudentResponse> editStudent(@RequestBody StudentRequest request,
+  public ResponseEntity<StudentResponse> editStudent(@RequestBody @Valid StudentRequest request,
                                                     @PathVariable Long studentId,
                                                     @RequestParam(required = false) boolean returnOld){
     StudentResponse response = studentService.editStudent(studentId,request);

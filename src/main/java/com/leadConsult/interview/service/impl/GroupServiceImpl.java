@@ -7,6 +7,7 @@ import com.leadConsult.interview.mapper.GroupMapper;
 import com.leadConsult.interview.repository.GroupRepository;
 import com.leadConsult.interview.service.GroupService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +50,20 @@ public class GroupServiceImpl implements GroupService {
     Group group = getGroupFromRepository(groupId);
 
     return groupMapper.groupToGroupResponse(group);
+  }
+
+  @Override
+  @Transactional
+  public GroupResponse editGroup(Long groupId, GroupRequest request) {
+    Group oldGroup = getGroupFromRepository(groupId);
+
+    Group editedGroup = groupMapper.groupRequestToGroup(request);
+    editedGroup.setGroupId(groupId);
+    editedGroup.setStudents(oldGroup.getStudents());
+    editedGroup.setTeachers(oldGroup.getTeachers());
+    GroupResponse response = groupMapper.groupToGroupResponse(oldGroup);
+    groupRepository.save(editedGroup);
+
+    return response;
   }
 }

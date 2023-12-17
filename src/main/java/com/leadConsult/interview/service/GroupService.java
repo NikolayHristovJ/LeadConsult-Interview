@@ -15,4 +15,6 @@ public interface GroupService {
   GroupResponse postGroup(GroupRequest groupRequest);
 
   GroupResponse getGroupById(Long groupId);
+
+  GroupResponse editGroup(Long groupId, GroupRequest request);
 }

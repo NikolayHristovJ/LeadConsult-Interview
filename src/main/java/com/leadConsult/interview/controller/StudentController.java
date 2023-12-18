@@ -153,7 +153,7 @@ public class StudentController {
     description = "Get a Student that is in a specific Course and is above a certain age",
     responses = {
       @ApiResponse(
-        description = "Success",
+        description = "Success if age is not present it will print all Students in that course",
         responseCode = "200"
       ),
       @ApiResponse(
@@ -164,8 +164,14 @@ public class StudentController {
   )
   @GetMapping("/courses/{courseId}")
   public ResponseEntity<List<StudentResponse>> getAllStudentsInCourseAndAboveAge(@PathVariable Long courseId,
-                                                                                 @RequestParam @Positive(message = "age should be above 0") int age){
-    List<StudentResponse> response = studentService.getAllStudentsInCourseAndAboveAge(courseId,age);
+                                                                                 @RequestParam(required = false) @Positive(message = "age should be above 0") Integer age){
+    final List<StudentResponse> response;
+
+    if (age != null){
+      response = studentService.getAllStudentsInCourseAndAboveAge(courseId, age);
+    }else {
+      response = studentService.getAllStudentsInCourse(courseId);
+    }
 
     return ResponseEntity.ok(response);
   }

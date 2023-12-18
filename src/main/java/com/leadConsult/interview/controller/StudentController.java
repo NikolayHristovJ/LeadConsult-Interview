@@ -91,4 +91,17 @@ public class StudentController {
     return ResponseEntity.ok(response);
   }
 
+  @GetMapping("/groups/{groupId}")
+  public ResponseEntity<List<StudentResponse>> getAllStudentsByGroup(@PathVariable Long groupId){
+    List<StudentResponse> response = studentService.getStudentByGroup(groupId);
+
+    return ResponseEntity.ok(response);
+  }
+
+  @GetMapping("/courses/{courseId}/groups/{groupId}")
+  public ResponseEntity<List<StudentResponse>> getAllStudentsByCourseAndGroup(@PathVariable Long courseId, @PathVariable Long groupId){
+    List<StudentResponse> response = studentService.getStudentByCourseAndGroup(courseId,groupId);
+    return ResponseEntity.ok(response);
+  }
+
 }

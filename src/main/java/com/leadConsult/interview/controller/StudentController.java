@@ -4,9 +4,11 @@ import com.leadConsult.interview.dto.request.StudentRequest;
 import com.leadConsult.interview.dto.response.StudentResponse;
 import com.leadConsult.interview.service.StudentService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/api/students")
+@Validated
 public class StudentController {
   private final StudentService studentService;
   @Autowired
@@ -78,6 +81,27 @@ public class StudentController {
     } else {
       return ResponseEntity.noContent().build();
     }
+  }
+
+  @GetMapping("/courses/{courseId}")
+  public ResponseEntity<List<StudentResponse>> getAllStudentsInCourseAndAboveAge(@PathVariable Long courseId,
+                                                                                 @RequestParam @Positive(message = "age should be above 0") int age){
+    List<StudentResponse> response = studentService.getAllStudentsInCourseAndAboveAge(courseId,age);
+
+    return ResponseEntity.ok(response);
+  }
+
+  @GetMapping("/groups/{groupId}")
+  public ResponseEntity<List<StudentResponse>> getAllStudentsByGroup(@PathVariable Long groupId){
+    List<StudentResponse> response = studentService.getStudentByGroup(groupId);
+
+    return ResponseEntity.ok(response);
+  }
+
+  @GetMapping("/courses/{courseId}/groups/{groupId}")
+  public ResponseEntity<List<StudentResponse>> getAllStudentsByCourseAndGroup(@PathVariable Long courseId, @PathVariable Long groupId){
+    List<StudentResponse> response = studentService.getStudentByCourseAndGroup(courseId,groupId);
+    return ResponseEntity.ok(response);
   }
 
 }

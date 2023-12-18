@@ -81,4 +81,10 @@ public class TeacherController {
     teacherService.addTeacherToGroup(teacherId,groupId);
     return ResponseEntity.noContent().build();
   }
+
+  @GetMapping("/courses/{courseId}/groups/{groupId}")
+  public ResponseEntity<List<TeacherResponse>> getAllTeachersByCourseAndGroup(@PathVariable Long courseId, @PathVariable Long groupId){
+    List<TeacherResponse> response = teacherService.getTeacherByCourseAndGroup(courseId,groupId);
+    return ResponseEntity.ok(response);
+  }
 }

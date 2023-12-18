@@ -17,4 +17,6 @@ public interface CourseService {
   CourseResponse getCourseById(Long courseId);
 
   CourseResponse editCourse(Long courseId, CourseRequest request);
+
+  List<CourseResponse> getCoursesByType(String courseType);
 }

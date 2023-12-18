@@ -104,4 +104,10 @@ public class StudentServiceImpl implements StudentService {
     studentRepository.deleteById(student.getStudentId());
     return studentMapper.studentToStudentResponse(student);
   }
+
+  @Override
+  public List<StudentResponse> getAllStudentsInCourseAndAboveAge(Long courseId, int age) {
+    List<Student> students = studentRepository.findAllByStudentsInCourseAndAboveAge(courseId,age);
+    return studentMapper.listStudentToListStudentResponse(students);
+  }
 }

@@ -23,4 +23,10 @@ public interface StudentService {
   void addStudentToGroup(Long studentId, Long groupId);
 
   StudentResponse deleteStudent(Long studentId);
+
+  List<StudentResponse> getAllStudentsInCourseAndAboveAge(Long courseId, int age);
+
+  List<StudentResponse> getStudentByGroup(Long groupId);
+
+  List<StudentResponse> getStudentByCourseAndGroup(Long courseId, Long groupId);
 }

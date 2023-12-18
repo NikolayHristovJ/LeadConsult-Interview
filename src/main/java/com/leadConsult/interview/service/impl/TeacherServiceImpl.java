@@ -103,4 +103,10 @@ public class TeacherServiceImpl implements TeacherService {
     teacher.setGroup(group);
     teacherRepository.save(teacher);
   }
+
+  @Override
+  public List<TeacherResponse> getTeacherByCourseAndGroup(Long courseId, Long groupId) {
+    List<Teacher> teachers = teacherRepository.findByCourseIdAndGroupId(courseId, groupId);
+    return teacherMapper.listTeacherToListTeacherResponse(teachers);
+  }
 }

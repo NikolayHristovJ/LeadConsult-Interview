@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/api/courses")
 public class CourseController {
+
   private final CourseService courseService;
 
   @Autowired
@@ -29,32 +30,39 @@ public class CourseController {
   }
 
   @GetMapping
-  public ResponseEntity<List<CourseResponse>> getAllCourses(){
+  public ResponseEntity<List<CourseResponse>> getAllCourses() {
     List<CourseResponse> response = courseService.getAllCourses();
     return ResponseEntity.ok(response);
   }
 
   @PostMapping
-  public ResponseEntity<CourseResponse> postCourse(@RequestBody @Valid CourseRequest courseRequest){
+  public ResponseEntity<CourseResponse> postCourse(@RequestBody @Valid CourseRequest courseRequest) {
     CourseResponse response = courseService.postGroup(courseRequest);
     return new ResponseEntity<>(response, HttpStatus.CREATED);
   }
 
   @GetMapping("/{courseId}")
-  public ResponseEntity<CourseResponse> getCourseById(@PathVariable Long courseId){
+  public ResponseEntity<CourseResponse> getCourseById(@PathVariable Long courseId) {
     CourseResponse response = courseService.getCourseById(courseId);
     return ResponseEntity.ok(response);
   }
 
   @PutMapping("/{courseId}")
-  public ResponseEntity<CourseResponse> editCourse(@RequestBody @Valid CourseRequest request,
-                                                    @PathVariable Long courseId,
-                                                    @RequestParam(required = false) boolean returnOld){
-    CourseResponse response = courseService.editCourse(courseId,request);
+  public ResponseEntity<CourseResponse> editCourse(
+    @RequestBody @Valid CourseRequest request,
+    @PathVariable Long courseId,
+    @RequestParam(required = false) boolean returnOld) {
+    CourseResponse response = courseService.editCourse(courseId, request);
     if (returnOld) {
       return ResponseEntity.ok(response);
     } else {
       return ResponseEntity.noContent().build();
     }
+  }
+
+  @GetMapping("/type/{courseType}")
+  public ResponseEntity<List<CourseResponse>> getCoursesByType(@PathVariable String courseType) {
+    List<CourseResponse> response = courseService.getCoursesByType(courseType);
+    return ResponseEntity.ok(response);
   }
 }

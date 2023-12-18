@@ -67,4 +67,10 @@ public class CourseServiceImpl implements CourseService {
     return response;
   }
 
+  @Override
+  public List<CourseResponse> getCoursesByType(String courseType) {
+    List<Course> courses = courseRepository.findAllByType(courseType);
+    return courseMapper.listCourseToListCourseResponse(courses);
+  }
+
 }

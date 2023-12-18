@@ -1,6 +1,7 @@
 package com.leadConsult.interview.handler;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,17 @@ public class GlobalExceptionHandler {
                                    .map(FieldError::getDefaultMessage)
                                    .collect(Collectors.toList());
     return new ResponseEntity<>(formatErrorsResponse(errors), HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<Map<String,List<String>>> handleConstraintViolationException(
+    ConstraintViolationException exception){
+
+    log.error("Caught exception: ", exception);
+
+    String error = exception.getMessage();
+    Map<String, List<String>> errorsMap = formatErrorsResponse(error);
+    return new ResponseEntity<>(errorsMap, HttpStatus.BAD_REQUEST);
   }
 
   private Map<String, List<String>> formatErrorsResponse(String... errors) {

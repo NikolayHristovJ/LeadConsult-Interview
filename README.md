@@ -15,8 +15,8 @@ Link to swaggerUI: http://localhost:8080/swagger-ui/index.html#/
 To run this application all you need to do is clone this repository and then run it from an IDE of your choice.
 
 ## ERD
-![ERD diagram](/src/main/resources/erd/ERD Diagram for Lead_Consult app.png)
+![ERD diagram](/src/main/resources/erd/ERD%20Diagram%20for%20Lead_Consult%20app.png)
 
 ## Postman Collection
 You can also find a postman collection file that you can import into your Postman to use this app.
-(link to postman collection)
+[Link to Postman Collection in the repo](https://github.com/NikolayHristovJ/LeadConsult-Interview/tree/main/src/main/resources/postman_collection)

@@ -12,13 +12,16 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "students")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Student {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -84,5 +87,22 @@ public class Student {
 
   public void setGroup(Group group) {
     this.group = group;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Student student = (Student) o;
+    return Objects.equals(studentId, student.studentId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(studentId);
   }
 }

@@ -11,13 +11,16 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "courses")
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Course {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,5 +76,22 @@ public class Course {
 
   public void setTeachers(Set<Teacher> teachers) {
     this.teachers = teachers;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Course course = (Course) o;
+    return Objects.equals(courseId, course.courseId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(courseId);
   }
 }

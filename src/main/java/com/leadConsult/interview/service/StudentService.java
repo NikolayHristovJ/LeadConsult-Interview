@@ -29,4 +29,6 @@ public interface StudentService {
   List<StudentResponse> getStudentByGroup(Long groupId);
 
   List<StudentResponse> getStudentByCourseAndGroup(Long courseId, Long groupId);
+
+  List<StudentResponse> getAllStudentsInCourse(Long courseId);
 }

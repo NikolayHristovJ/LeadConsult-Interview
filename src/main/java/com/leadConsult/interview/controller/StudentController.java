@@ -3,6 +3,8 @@ package com.leadConsult.interview.controller;
 import com.leadConsult.interview.dto.request.StudentRequest;
 import com.leadConsult.interview.dto.response.StudentResponse;
 import com.leadConsult.interview.service.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,19 @@ public class StudentController {
     return ResponseEntity.ok(response);
   }
 
+  @Operation(
+    description = "Add a student to the DB",
+    responses = {
+      @ApiResponse(
+        description = "Success",
+        responseCode = "200"
+      ),
+      @ApiResponse(
+        description = "Failure you tried to post with data that is not valid",
+        responseCode = "400"
+      )
+    }
+  )
   @PostMapping
   public ResponseEntity<StudentResponse> postStudent(@RequestBody @Valid StudentRequest studentRequest){
     StudentResponse newStudent = studentService.postStudent(studentRequest);
@@ -49,6 +64,27 @@ public class StudentController {
     return ResponseEntity.ok(response);
   }
 
+  @Operation(
+    description = "Edit a student",
+    responses = {
+      @ApiResponse(
+        description = "Success",
+        responseCode = "200"
+      ),
+      @ApiResponse(
+        description = "Success but with no body",
+        responseCode = "204"
+      ),
+      @ApiResponse(
+        description = "Failure student id not found",
+        responseCode = "404"
+      ),
+      @ApiResponse(
+        description = "Failure you tried to edit with data that is not valid",
+        responseCode = "400"
+      )
+    }
+  )
   @PutMapping("/{studentId}")
   public ResponseEntity<StudentResponse> editStudent(@RequestBody @Valid StudentRequest request,
                                                     @PathVariable Long studentId,
@@ -61,6 +97,19 @@ public class StudentController {
     }
   }
 
+  @Operation(
+    description = "Add a Course to a Student",
+    responses = {
+      @ApiResponse(
+        description = "Success",
+        responseCode = "200"
+      ),
+      @ApiResponse(
+        description = "Failure no course/student found",
+        responseCode = "404"
+      )
+    }
+  )
   @PostMapping("/{studentId}/courses/{courseId}/add")
   public ResponseEntity<Void> addCourseToStudent(@PathVariable Long courseId,@PathVariable Long studentId){
     studentService.addCourseToStudent(courseId,studentId);
@@ -73,6 +122,23 @@ public class StudentController {
     return ResponseEntity.noContent().build();
   }
 
+  @Operation(
+    description = "Delete Student",
+    responses = {
+      @ApiResponse(
+        description = "Success",
+        responseCode = "200"
+      ),
+      @ApiResponse(
+        description = "Success but with no body",
+        responseCode = "204"
+      ),
+      @ApiResponse(
+        description = "Failure student id not found",
+        responseCode = "404"
+      )
+    }
+  )
   @DeleteMapping("{studentId}")
   public ResponseEntity<StudentResponse> deleteStudent(@PathVariable Long studentId, @RequestParam(required = false) boolean returnOld){
     StudentResponse response = studentService.deleteStudent(studentId);
@@ -83,14 +149,42 @@ public class StudentController {
     }
   }
 
+  @Operation(
+    description = "Get a Student that is in a specific Course and is above a certain age",
+    responses = {
+      @ApiResponse(
+        description = "Success if age is not present it will print all Students in that course",
+        responseCode = "200"
+      ),
+      @ApiResponse(
+        description = "Failure if age is bellow 0",
+        responseCode = "400"
+      )
+    }
+  )
   @GetMapping("/courses/{courseId}")
   public ResponseEntity<List<StudentResponse>> getAllStudentsInCourseAndAboveAge(@PathVariable Long courseId,
-                                                                                 @RequestParam @Positive(message = "age should be above 0") int age){
-    List<StudentResponse> response = studentService.getAllStudentsInCourseAndAboveAge(courseId,age);
+                                                                                 @RequestParam(required = false) @Positive(message = "age should be above 0") Integer age){
+    final List<StudentResponse> response;
+
+    if (age != null){
+      response = studentService.getAllStudentsInCourseAndAboveAge(courseId, age);
+    }else {
+      response = studentService.getAllStudentsInCourse(courseId);
+    }
 
     return ResponseEntity.ok(response);
   }
 
+  @Operation(
+    description = "Get a Student that is in a specific group",
+    responses = {
+      @ApiResponse(
+        description = "Success",
+        responseCode = "200"
+      )
+    }
+  )
   @GetMapping("/groups/{groupId}")
   public ResponseEntity<List<StudentResponse>> getAllStudentsByGroup(@PathVariable Long groupId){
     List<StudentResponse> response = studentService.getStudentByGroup(groupId);
@@ -98,6 +192,15 @@ public class StudentController {
     return ResponseEntity.ok(response);
   }
 
+  @Operation(
+    description = "Get a Student that is in a specific course and a specific group",
+    responses = {
+      @ApiResponse(
+        description = "Success",
+        responseCode = "200"
+      )
+    }
+  )
   @GetMapping("/courses/{courseId}/groups/{groupId}")
   public ResponseEntity<List<StudentResponse>> getAllStudentsByCourseAndGroup(@PathVariable Long courseId, @PathVariable Long groupId){
     List<StudentResponse> response = studentService.getStudentByCourseAndGroup(courseId,groupId);

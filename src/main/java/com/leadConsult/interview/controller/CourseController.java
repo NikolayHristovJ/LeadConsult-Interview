@@ -3,6 +3,8 @@ package com.leadConsult.interview.controller;
 import com.leadConsult.interview.dto.request.CourseRequest;
 import com.leadConsult.interview.dto.response.CourseResponse;
 import com.leadConsult.interview.service.CourseService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,19 @@ public class CourseController {
     return ResponseEntity.ok(response);
   }
 
+  @Operation(
+    description = "Add a Course to the DB",
+    responses = {
+      @ApiResponse(
+        description = "Success",
+        responseCode = "200"
+      ),
+      @ApiResponse(
+        description = "Failure you tried to post with data that is not valid",
+        responseCode = "400"
+      )
+    }
+  )
   @PostMapping
   public ResponseEntity<CourseResponse> postCourse(@RequestBody @Valid CourseRequest courseRequest) {
     CourseResponse response = courseService.postGroup(courseRequest);
@@ -47,11 +62,31 @@ public class CourseController {
     return ResponseEntity.ok(response);
   }
 
+  @Operation(
+    description = "Edit a Course",
+    responses = {
+      @ApiResponse(
+        description = "Success",
+        responseCode = "200"
+      ),
+      @ApiResponse(
+        description = "Success but with no body",
+        responseCode = "204"
+      ),
+      @ApiResponse(
+        description = "Failure course id not found",
+        responseCode = "404"
+      ),
+      @ApiResponse(
+        description = "Failure you tried to edit with data that is not valid",
+        responseCode = "400"
+      )
+    }
+  )
   @PutMapping("/{courseId}")
-  public ResponseEntity<CourseResponse> editCourse(
-    @RequestBody @Valid CourseRequest request,
-    @PathVariable Long courseId,
-    @RequestParam(required = false) boolean returnOld) {
+  public ResponseEntity<CourseResponse> editCourse(@RequestBody @Valid CourseRequest request,
+                                                   @PathVariable Long courseId,
+                                                   @RequestParam(required = false) boolean returnOld) {
     CourseResponse response = courseService.editCourse(courseId, request);
     if (returnOld) {
       return ResponseEntity.ok(response);
@@ -60,6 +95,15 @@ public class CourseController {
     }
   }
 
+  @Operation(
+    description = "Get all Courses that are have a specific type",
+    responses = {
+      @ApiResponse(
+        description = "Success",
+        responseCode = "200"
+      )
+    }
+  )
   @GetMapping("/type/{courseType}")
   public ResponseEntity<List<CourseResponse>> getCoursesByType(@PathVariable String courseType) {
     List<CourseResponse> response = courseService.getCoursesByType(courseType);

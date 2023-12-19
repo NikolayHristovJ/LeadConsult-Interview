@@ -122,4 +122,11 @@ public class StudentServiceImpl implements StudentService {
     List<Student> students = studentRepository.findByCourseIdAndGroupId(courseId,groupId);
     return studentMapper.listStudentToListStudentResponse(students);
   }
+
+  @Override
+  public List<StudentResponse> getAllStudentsInCourse(Long courseId) {
+    List<Student> students = studentRepository.findAllByStudentsInCourse(courseId);
+
+    return studentMapper.listStudentToListStudentResponse(students);
+  }
 }

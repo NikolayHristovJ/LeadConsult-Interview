@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.leadConsult</groupId>
-	<artifactId>intrview</artifactId>
+	<artifactId>intreview</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>interview</name>
 	<description>This is a project for my interview at LeadConsult</description>

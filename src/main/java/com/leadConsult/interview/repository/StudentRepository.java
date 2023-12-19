@@ -24,4 +24,10 @@ public interface StudentRepository extends ListCrudRepository<Student,Long> {
          "LEFT JOIN courses AS cu ON sc.course_id = cu.course_id " +
          "WHERE s.group_id = :groupId AND cu.course_id = :courseId",nativeQuery = true)
   List<Student> findByCourseIdAndGroupId(Long courseId, Long groupId);
+
+  @Query(value = "SELECT s.* FROM students AS s " +
+                 "LEFT JOIN students_courses AS sc ON s.student_id = sc.student_id " +
+                 "LEFT JOIN courses AS cu ON sc.course_id = cu.course_id " +
+                 "WHERE cu.course_id = :courseId",nativeQuery = true)
+  List<Student> findAllByStudentsInCourse(Long courseId);
 }
